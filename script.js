@@ -255,7 +255,7 @@ function checkAnswer(choice) {
     result.innerText = `❌ 오답! 정답은 ${q.answer}번이야!`;
     result.style.color = "red";
   }
-
+}
   // 보기 버튼 비활성화
   const buttons = document.querySelectorAll("#options button");
   buttons.forEach(btn => btn.disabled = true);
