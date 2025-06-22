@@ -181,14 +181,6 @@ const hard = [
     answer: "A"
   }
 ];
-// 배열 섞는 함수
-function shuffleArray(array) {
-  for (let i = array.length -1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i +1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
 
 // 난이도별 문제 3개, 3개, 1개 추출해서 합침
 const quizData = [
