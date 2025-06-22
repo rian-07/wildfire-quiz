@@ -236,7 +236,7 @@ function loadQuestion() {
     btn.innerText = opt;
     btn.onclick = () => checkAnswer(opt[0]);  // 첫 글자(A/B/C/D)
     optionsDiv.appendChild(btn);
-  })};
+  });
 
   // 결과, 다음 버튼 초기화
   document.getElementById("result").innerText = "";
