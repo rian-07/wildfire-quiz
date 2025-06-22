@@ -1,0 +1,62 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fef9f4;
+  text-align: center;
+  padding: 30px;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background-color: #fff3e0;
+  border: 2px solid #ff7043;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+  color: #e64a19;
+}
+
+.options button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ffe0b2;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 80%;
+}
+
+.options button:hover {
+  background-color: #ffcc80;
+}
+
+#result {
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+#nextBtn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ffab91;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.level-easy {
+  color: #ffb74d; /* 연한 주황 (초급) */
+}
+
+.level-medium {
+  color: #fb8c00; /* 중간 주황 (중급) */
+}
+
+.level-hard {
+  color: #e65100; /* 진한 주황 (상급) */
+}
