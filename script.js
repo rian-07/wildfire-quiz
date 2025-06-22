@@ -1,3 +1,10 @@
+// 난이도별로 골라서 합치기
+const quizData = [
+  ...shuffleArray([...easy]).slice(0, 3),   // 하 3문제
+  ...shuffleArray([...medium]).slice(0, 3), // 중 3문제
+  ...shuffleArray([...hard]).slice(0, 1)    // 상 1문제
+];
+
 // 초급 문제 (기초 대피 지식)
 const easy = [
   {
@@ -189,7 +196,7 @@ function getScore(level) {
     else return 0;
 }
 
-// 2. 배열 섞는 함수
+// 배열 섞는 함수
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -198,13 +205,6 @@ function shuffleArray(array) {
   return array;
 }
 
-// 3. 난이도별로 골라서 합치기
-const quizData = [
-  ...shuffleArray([...easy]).slice(0, 3),   // 하 2문제
-  ...shuffleArray([...medium]).slice(0, 2), // 중 2문제
-  ...shuffleArray([...hard]).slice(0, 1)    // 상 1문제
-];
-
 body {
   font-family: 'Arial', sans-serif;
   background-color: #fef9f4; /* 기존 색상 유지 */
@@ -212,7 +212,6 @@ body {
   padding: 30px;
 }
 
-// 배열 섞기 함수
 let currentQuestion = 0;
 let score = 0;
 
