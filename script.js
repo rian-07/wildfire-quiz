@@ -199,7 +199,7 @@ function shuffleArray(array) {
 }
 
 // 3. 난이도별로 골라서 합치기
-const quizSubset = [
+const quizData = [
   ...shuffleArray([...easy]).slice(0, 3),   // 하 2문제
   ...shuffleArray([...medium]).slice(0, 2), // 중 2문제
   ...shuffleArray([...hard]).slice(0, 1)    // 상 1문제
