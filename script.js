@@ -259,7 +259,6 @@ function checkAnswer(choice) {
   // 보기 버튼 비활성화
   const buttons = document.querySelectorAll("#options button");
   buttons.forEach(btn => btn.disabled = true);
-
   document.getElementById("nextBtn").style.display = "inline-block";
 }
 
