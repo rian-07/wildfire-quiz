@@ -261,7 +261,6 @@ function checkAnswer(choice) {
   buttons.forEach(btn => btn.disabled = true);
   document.getElementById("nextBtn").style.display = "inline-block";
 }
-
 function nextQuestion() {
   currentQuestion++;
   if(currentQuestion < quizData.length) {
