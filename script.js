@@ -182,6 +182,15 @@ const hard = [
   }
 ];
 
+// 배열을 무작위로 섞는 함수
+function shuffleArray(array) {
+  for(let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 // 난이도별 문제 3개, 3개, 1개 추출해서 합침
 const quizData = [
   ...shuffleArray([...easy]).slice(0, 3),
@@ -243,7 +252,7 @@ function checkAnswer(choice) {
   }
 
   // 보기 버튼 비활성화
-  const buttons = document.querySelectorAll(".options button");
+  const buttons = document.querySelectorAll("#options button");
   buttons.forEach(btn => btn.disabled = true);
 
   document.getElementById("nextBtn").style.display = "inline-block";
