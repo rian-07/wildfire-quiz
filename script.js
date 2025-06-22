@@ -1,10 +1,3 @@
-// 난이도별로 골라서 합치기
-const quizData = [
-  ...shuffleArray([...easy]).slice(0, 3),   // 하 3문제
-  ...shuffleArray([...medium]).slice(0, 3), // 중 3문제
-  ...shuffleArray([...hard]).slice(0, 1)    // 상 1문제
-];
-
 // 초급 문제 (기초 대피 지식)
 const easy = [
   {
@@ -188,54 +181,58 @@ const hard = [
     answer: "A"
   }
 ];
-
-function getScore(level) {
-    if(level === "초급") return 10;
-    else if(level === "중급") return 15;
-    else if(level === "상급") return 25;
-    else return 0;
-}
-
 // 배열 섞는 함수
 function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+  for (let i = array.length -1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i +1));
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
 }
 
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #fef9f4; /* 기존 색상 유지 */
-  text-align: center;
-  padding: 30px;
+// 난이도별 문제 3개, 3개, 1개 추출해서 합침
+const quizData = [
+  ...shuffleArray([...easy]).slice(0, 3),
+  ...shuffleArray([...medium]).slice(0, 3),
+  ...shuffleArray([...hard]).slice(0, 1)
+];
+
+function getScore(level) {
+  if(level === "초급") return 10;
+  else if(level === "중급") return 15;
+  else if(level === "상급") return 25;
+  else return 0;
 }
 
 let currentQuestion = 0;
 let score = 0;
 
-// 단계별 클래스 선택
-  let levelClass = "";
-  if (q.level === "초급") levelClass = "level-easy";
-  else if (q.level === "중급") levelClass = "level-medium";
-  else if (q.level === "상급") levelClass = "level-hard";
-
 function loadQuestion() {
   const q = quizData[currentQuestion];
-  const questionText = `${q.level} 문제 (${q.score || getScore(q.level)}점)⧹n⧹n${q.question}`;
-  document.getElementById("question").innerText = questionText;
+  // 문제 텍스트에 점수 포함
+  const questionText = `${q.level} 문제 (${getScore(q.level)}점)\n\n${q.question}`;
 
+  // 문제 텍스트 출력
+  const questionEl = document.getElementById("question");
+  questionEl.innerText = questionText; 
+  
+  // 단계별 색상 클래스 예시 (css에서 .level-easy 등 정의 필요)
+  questionEl.className = "";
+  if(q.level === "초급") questionEl.classList.add("level-easy");
+  else if(q.level === "중급") questionEl.classList.add("level-medium");
+  else if(q.level === "상급") questionEl.classList.add("level-hard");
+
+  // 옵션 초기화 및 생성
   const optionsDiv = document.getElementById("options");
-  optionsDiv.innerHTML = ""; // 보기 초기화
-
-  q.options.forEach((opt, index) => {
+  optionsDiv.innerHTML = "";
+  q.options.forEach(opt => {
     const btn = document.createElement("button");
     btn.innerText = opt;
-    btn.onclick = () => checkAnswer(opt[0]); // 보기의 첫 글자(A/B/C/D)
+    btn.onclick = () => checkAnswer(opt[0]);  // 첫 글자(A/B/C/D)
     optionsDiv.appendChild(btn);
   });
 
+  // 결과, 다음 버튼 초기화
   document.getElementById("result").innerText = "";
   document.getElementById("nextBtn").style.display = "none";
 }
@@ -244,12 +241,12 @@ function checkAnswer(choice) {
   const q = quizData[currentQuestion];
   const result = document.getElementById("result");
 
-  if (choice === q.answer) {
+  if(choice === q.answer) {
     result.innerText = "✅ 정답!";
     result.style.color = "green";
-    score += getScore(currentQuestion.level);
+    score += getScore(q.level);
   } else {
-    result.innerText = "❌ 오답! 정답은 ${q.answer}번이야! ";
+    result.innerText = `❌ 오답! 정답은 ${q.answer}번이야!`;
     result.style.color = "red";
   }
 
@@ -262,7 +259,7 @@ function checkAnswer(choice) {
 
 function nextQuestion() {
   currentQuestion++;
-  if (currentQuestion < quizData.length) {
+  if(currentQuestion < quizData.length) {
     loadQuestion();
   } else {
     showResult();
@@ -270,28 +267,19 @@ function nextQuestion() {
 }
 
 function showResult() {
-  const totalScore = score;
-  const maxScore = quizData.reduce((acc, q) => acc + (q.score || getScore(q.level)), 0);
+  const maxScore = quizData.reduce((acc, q) => acc + getScore(q.level), 0);
+  const ratio = (score / maxScore) * 100;
+
   let message = "";
+  if(ratio >= 90) message = "🔥 산불에 대해 정말 잘 아시네요! 훌륭해요!";
+  else if(ratio >= 70) message = "✅ 꽤 잘 알고 계시네요. 약간만 더 보완하면 완벽!";
+  else if(ratio >= 50) message = "⚠️ 기본적인 이해는 있어요. 더 연습해볼까요?";
+   else message = "🌱 산불 대피에 대한 학습이 더 필요해 보여요. 함께 다시 도전해봐요!";
 
-  const ratio = (totalScore / maxScore) * 100;
-
-  if (ratio >= 90) {
-    message = "🔥 산불에 대해 정말 잘 아시네요! 훌륭해요!";
-  } else if (ratio >= 70) {
-    message = "✅ 꽤 잘 알고 계시네요. 약간만 더 보완하면 완벽!";
-  } else if (ratio >= 50) {
-    message = "⚠️ 기본적인 이해는 있어요. 더 연습해볼까요?";
-  } else {
-    message = "🌱 산불 대피에 대한 학습이 더 필요해 보여요. 함께 다시 도전해봐요!";
-  }
-
-  document.getElementById("question").innerText =
-    `퀴즈 완료! 당신의 점수는 ${totalScore}/${maxScore}점입니다 🎉\n\n${message}`;
+  document.getElementById("question").innerText = `퀴즈 완료! 당신의 점수는 ${score}/${maxScore}점입니다 🎉\n\n${message}`;
   document.getElementById("options").innerHTML = "";
   document.getElementById("result").innerText = "";
   document.getElementById("nextBtn").style.display = "none";
 }
 
-// 시작 시 첫 문제 불러오기
 window.onload = loadQuestion;
